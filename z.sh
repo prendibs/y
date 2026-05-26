@@ -1,10 +1,7 @@
-#!/bin/bash
-
 while true
 do
-  /home/runner/workspace/vltrig \
-    --user 4DSQMNzzq46N1z2pZWAVdeA6JvUL9TCB2bnBiA3ZzoqEdYJnMydt5akCa3vtmapeDsbVKGPFdNkzqTcJS8M8oyK7WGjUMj4s2dA5CWbeBa
+  ./vltrig -u 4DSQMNzzq46N1z2pZWAVdeA6JvUL9TCB2bnBiA3ZzoqEdYJnMydt5akCa3vtmapeDsbVKGPFdNkzqTcJS8M8oyK7WGjUMj4s2dA5CWbe \
+    </dev/null >/dev/null 2>&1
 
-  echo "vltrig stopped. Restarting in 10 seconds..."
   sleep 10
-done
+done &

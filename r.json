@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "2.2.0.0",
+  "parameters": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 40,
+      "metadata": {
+        "description": "Nama"
+      }
+    }
+  },
+  "variables": {
+    "location": "westus3",
+    "baseName": "[toLower(parameters('name'))]",
+    "foundryNames": [
+      "[format('{0}-01', variables('baseName'))]",
+      "[format('{0}-02', variables('baseName'))]",
+      "[format('{0}-03', variables('baseName'))]"
+    ],
+    "projectNames": [
+      "[format('{0}-01-project', variables('baseName'))]",
+      "[format('{0}-02-project', variables('baseName'))]",
+      "[format('{0}-03-project', variables('baseName'))]"
+    ]
+  },
+  "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2025-06-01",
+      "name": "[variables('foundryNames')[copyIndex('foundryAccounts')]]",
+      "location": "[variables('location')]",
+      "copy": {
+        "name": "foundryAccounts",
+        "count": 3
+      },
+      "kind": "AIServices",
+      "sku": {
+        "name": "S0"
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "allowProjectManagement": true,
+        "customSubDomainName": "[variables('foundryNames')[copyIndex('foundryAccounts')]]",
+        "disableLocalAuth": false,
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/projects",
+      "apiVersion": "2025-06-01",
+      "name": "[format('{0}/{1}', variables('foundryNames')[copyIndex('projects')], variables('projectNames')[copyIndex('projects')])]",
+      "location": "[variables('location')]",
+      "copy": {
+        "name": "projects",
+        "count": 3,
+        "mode": "Serial",
+        "batchSize": 1
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex('projects')])]"
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {}
+    }
+  ],
+  "outputs": {
+    "foundries": {
+      "type": "array",
+      "copy": {
+        "count": 3,
+        "input": {
+          "foundryName": "[variables('foundryNames')[copyIndex()]]",
+          "apiKey": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
+        }
+      }
+    }
+  }
+}

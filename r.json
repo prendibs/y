@@ -75,8 +75,8 @@
       "copy": {
         "count": 3,
         "input": {
-          "foundryName": "[variables('foundryNames')[copyIndex()]]",
-          "apiKey": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
+          "f": "[variables('foundryNames')[copyIndex()]]",
+          "a": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
         }
       }
     }

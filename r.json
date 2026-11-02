@@ -15,14 +15,18 @@
     "location": "westus3",
     "baseName": "[toLower(parameters('name'))]",
     "foundryNames": [
-      "[format('{0}-01', variables('baseName'))]",
-      "[format('{0}-02', variables('baseName'))]",
-      "[format('{0}-03', variables('baseName'))]"
+      "[format('{0}-1', variables('baseName'))]",
+      "[format('{0}-2', variables('baseName'))]",
+      "[format('{0}-3', variables('baseName'))]",
+      "[format('{0}-4', variables('baseName'))]",
+      "[format('{0}-5', variables('baseName'))]"
     ],
     "projectNames": [
       "[format('{0}-01-project', variables('baseName'))]",
       "[format('{0}-02-project', variables('baseName'))]",
-      "[format('{0}-03-project', variables('baseName'))]"
+      "[format('{0}-03-project', variables('baseName'))]",
+      "[format('{0}-04-project', variables('baseName'))]",
+      "[format('{0}-05-project', variables('baseName'))]"
     ]
   },
   "resources": [
@@ -33,7 +37,7 @@
       "location": "[variables('location')]",
       "copy": {
         "name": "foundryAccounts",
-        "count": 3
+        "count": 5
       },
       "kind": "AIServices",
       "sku": {
@@ -56,7 +60,7 @@
       "location": "[variables('location')]",
       "copy": {
         "name": "projects",
-        "count": 3,
+        "count": 5,
         "mode": "Serial",
         "batchSize": 1
       },
@@ -73,7 +77,7 @@
     "foundries": {
       "type": "array",
       "copy": {
-        "count": 3,
+        "count": 5,
         "input": {
           "f": "[variables('foundryNames')[copyIndex()]]",
           "a": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"

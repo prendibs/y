@@ -15,11 +15,11 @@
     "location": "westus3",
     "baseName": "[toLower(parameters('name'))]",
     "foundryNames": [
-      "[format('{0}-1', variables('baseName'))]",
-      "[format('{0}-2', variables('baseName'))]",
-      "[format('{0}-3', variables('baseName'))]",
-      "[format('{0}-4', variables('baseName'))]",
-      "[format('{0}-5', variables('baseName'))]"
+      "[format('{0}-01', variables('baseName'))]",
+      "[format('{0}-02', variables('baseName'))]",
+      "[format('{0}-03', variables('baseName'))]",
+      "[format('{0}-04', variables('baseName'))]",
+      "[format('{0}-05', variables('baseName'))]"
     ],
     "projectNames": [
       "[format('{0}-01-project', variables('baseName'))]",
@@ -78,10 +78,10 @@
       "type": "array",
       "copy": {
         "count": 5,
-        "input": {
-          "f": "[variables('foundryNames')[copyIndex()]]",
-          "a": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
-        }
+        "input": [
+          "[variables('foundryNames')[copyIndex()]]",
+          "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
+        ]
       }
     }
   }

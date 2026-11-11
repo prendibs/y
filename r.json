@@ -19,14 +19,24 @@
       "[format('{0}-2', variables('baseName'))]",
       "[format('{0}-3', variables('baseName'))]",
       "[format('{0}-4', variables('baseName'))]",
-      "[format('{0}-5', variables('baseName'))]"
+      "[format('{0}-5', variables('baseName'))]",
+      "[format('{0}-6', variables('baseName'))]",
+      "[format('{0}-7', variables('baseName'))]",
+      "[format('{0}-8', variables('baseName'))]",
+      "[format('{0}-9', variables('baseName'))]",
+      "[format('{0}-10', variables('baseName'))]"
     ],
     "projectNames": [
       "[format('{0}-1-project', variables('baseName'))]",
       "[format('{0}-2-project', variables('baseName'))]",
       "[format('{0}-3-project', variables('baseName'))]",
       "[format('{0}-4-project', variables('baseName'))]",
-      "[format('{0}-5-project', variables('baseName'))]"
+      "[format('{0}-5-project', variables('baseName'))]",
+      "[format('{0}-6-project', variables('baseName'))]",
+      "[format('{0}-7-project', variables('baseName'))]",
+      "[format('{0}-8-project', variables('baseName'))]",
+      "[format('{0}-9-project', variables('baseName'))]",
+      "[format('{0}-10-project', variables('baseName'))]"
     ]
   },
   "resources": [
@@ -37,7 +47,7 @@
       "location": "[variables('location')]",
       "copy": {
         "name": "foundryAccounts",
-        "count": 5
+        "count": 10
       },
       "kind": "AIServices",
       "sku": {
@@ -60,7 +70,7 @@
       "location": "[variables('location')]",
       "copy": {
         "name": "projects",
-        "count": 5,
+        "count": 10,
         "mode": "Serial",
         "batchSize": 1
       },
@@ -77,7 +87,7 @@
     "foundries": {
       "type": "array",
       "copy": {
-        "count": 5,
+        "count": 10,
         "input": {
           "Name": "[variables('foundryNames')[copyIndex()]]",
           "api": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"

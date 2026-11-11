@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "2.2.0.0",
+  "contentVersion": "2.3.0.0",
   "parameters": {
     "name": {
       "type": "string",
@@ -15,11 +15,11 @@
     "location": "westus3",
     "baseName": "[toLower(parameters('name'))]",
     "foundryNames": [
-      "[format('{0}-1', variables('baseName'))]",
-      "[format('{0}-2', variables('baseName'))]",
-      "[format('{0}-3', variables('baseName'))]",
-      "[format('{0}-4', variables('baseName'))]",
-      "[format('{0}-5', variables('baseName'))]"
+      "[format('{0}-01', variables('baseName'))]",
+      "[format('{0}-02', variables('baseName'))]",
+      "[format('{0}-03', variables('baseName'))]",
+      "[format('{0}-04', variables('baseName'))]",
+      "[format('{0}-05', variables('baseName'))]"
     ],
     "projectNames": [
       "[format('{0}-01-project', variables('baseName'))]",
@@ -78,10 +78,10 @@
       "type": "array",
       "copy": {
         "count": 5,
-        "input": [
-          "[variables('foundryNames')[copyIndex()]]",
-          "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
-        ]
+        "input": {
+          "Name": "[variables('foundryNames')[copyIndex()]]",
+          "api": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('foundryNames')[copyIndex()]), '2025-06-01').key1]"
+        }
       }
     }
   }
